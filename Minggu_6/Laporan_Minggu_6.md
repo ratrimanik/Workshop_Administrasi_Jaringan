@@ -43,7 +43,7 @@ Untuk menginstall BIND9, pada terminal jalankan perintah berikut:<br>
 **sudo apt install bind9**<br>
 ![](konjar/Install_Bind9.png)<br><br>
 Selanjutnya gunakan perintah<br>
-**sudo apt install dnsutils**
+**sudo apt install dnsutils**<br>
 ![](konjar/Install_DNS_Utils.png)<br><br>
 
 ## Forward Zone File (Domain ke IP)<br>
