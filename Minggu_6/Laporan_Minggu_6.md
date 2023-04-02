@@ -41,10 +41,10 @@ Untuk mengaktifkan konfigurasi baru, mulai ulang server DNS. Dari prompt termina
 ## Instalasi
 Untuk menginstall BIND9, pada terminal jalankan perintah berikut:<br>
 **sudo apt install bind9**<br>
-![](konjar/Install Bind9 2023-03-27 135610.png)<br><br>
+![](konjar/Install_Bind9.png)<br><br>
 Selanjutnya gunakan perintah<br>
 **sudo apt install dnsutils**
-![](konjar/Install DNS Utils 2023-03-27 135956.png)<br><br>
+![](konjar/Install_DNS_Utils.png)<br><br>
 
 ## Forward Zone File (Domain ke IP)<br>
 Untuk menambahkan zona DNS ke BIND9 dan mengubah BIND9 menjadi server Primer, gunakan perintah <br>
