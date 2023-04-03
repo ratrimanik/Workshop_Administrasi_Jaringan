@@ -2,13 +2,13 @@
 LAPORAN RESMI <br>
 WORKSHOP ADMINISTRASI JARINGAN <br>
 Installasi NTP <br>
-
-<br><br>
+<br>
 <p align=center>
 Dosen Pengampu:<br>
 Dr. Ferry Astika Saputra ST, M.Sc	
 
 <p align=center>
+Latifian Iman (3121600033) <br>
 Ratri Maria Manik (3121600039) <br>
 
 <p align=center>
