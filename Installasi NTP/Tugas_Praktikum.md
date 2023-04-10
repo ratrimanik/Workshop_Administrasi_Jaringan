@@ -10,6 +10,7 @@ Dr. Ferry Astika Saputra ST, M.Sc
 <p align=center>
 Latifian Iman (3121600033) <br>
 Ratri Maria Manik (3121600039) <br>
+Dzikri Mutawakkil (3121600041) <br>
 
 <p align=center>
 PROGRAM STUDI TEKNIK INFORMATIKA<br>
