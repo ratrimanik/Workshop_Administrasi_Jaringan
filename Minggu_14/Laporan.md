@@ -54,7 +54,7 @@ buat mail directory di directory /etc/skel<br>
 **maildirmake.dovecot /etc/skel/Maildir**<br>
 
 Setelah itu masukkan perintah berikut<br>
-**dpkg-reconfigure postfix**
+**dpkg-reconfigure postfix**<br>
 Pilih beberapa pilihan dan isikan beberapa input yang akan muncul, sesuaikan dengan topology/konfigurasi sistem dan kebutuhan.<br>
 ![](ss/1a.png)<br><br>
 ![](ss/1.png)<br><br>
@@ -67,7 +67,7 @@ Pilih beberapa pilihan dan isikan beberapa input yang akan muncul, sesuaikan den
 ![](ss/5a.png)<br><br>
 
 Restart postfix service, dengan menggunakan perintah<br>
-**systemctl restart postfix**
+**systemctl restart postfix**<br>
 
 3. Konfigurasi Dovecot<br>
 Edit file konfigurasi /etc/dovecot/dovecot.conf.<br>
@@ -75,8 +75,8 @@ Edit file konfigurasi /etc/dovecot/dovecot.conf.<br>
 
 Uncomment dan edit baris berikut.<br>
 
-**# If you want to specify non-default ports or anything more complex,**
-**# edit conf.d/master.conf.**
+**# If you want to specify non-default ports or anything more complex,**<br>
+**# edit conf.d/master.conf.**<br>
 **listen = ***<br>
 ![](ss/9.png)<br><br>
 
@@ -100,12 +100,12 @@ Beri comment pada baris berikut.<br>
 **# mail_location = mbox:~/mail:INBOX=/var/mail/%u**<br>
 
 Restart dovesot service, dengan menggunakan perintah<br>
-**systemctl restart dovecot**
+**systemctl restart dovecot**<br>
 
 ## Konfigurasi RoundCube
-1. Install Mariadb dan Roundcube
-Install roundcube sebagai webmail yang akan digunakan oleh client, dan package mariadb yang nantinya akan digunakan sebagai database dari roundcube.
-**apt install mariadb-server roundcube**
+1. Install Mariadb dan Roundcube<br>
+Install roundcube sebagai webmail yang akan digunakan oleh client, dan package mariadb yang nantinya akan digunakan sebagai database dari roundcube.<br>
+**apt install mariadb-server roundcube**<br
 Pilih yes untuk membuat database secara otomatis oleh roundcube.<br>
 ![](ss/14.png)<br><br>
 
@@ -125,19 +125,19 @@ Ganti smtp server dengan nama domain mail server.<br>
 **$config['smtp_server'] = 'mail.kampus-02.takehome.com';**<br>
 
 Ganti smtp port dari 587 ke 25.<br>
-**// SMTP port. Use 25 for cleartext, 465 for Implicit TLS, or 587 for STARTTLS (default)**
-**$config['smtp_port'] = 25;**
+**// SMTP port. Use 25 for cleartext, 465 for Implicit TLS, or 587 for STARTTLS (default)**<br>
+**$config['smtp_port'] = 25;**<br>
 
 Kosongkan value dari smtp user.<br>
-**// will use the current username for login**
-**$config['smtp_user'] = '';**
+**// will use the current username for login**<br>
+**$config['smtp_user'] = '';**<br>
 
 Kosongkan value dari smtp password<br>
-**// will use the current user's password for login**
-**$config['smtp_pass'] = '';**
+**// will use the current user's password for login**<br>
+**$config['smtp_pass'] = '';**<br>
 
 Configure ulang roundcube (langkah ini bisa dilewati).<br>
-**dpkg-reconfigure roundcube-core**
+**dpkg-reconfigure roundcube-core**<br>
 
 Kosongkan karena kita tidak menggunakan tls.<br>
 ![](ss/17.png)<br><br>
@@ -161,31 +161,31 @@ Edit apache config untuk memasukkan konfigurasi tambahan dari roundcube ke apach
 Tambahkan pada baris paling bawah.<br>
 **Include /etc/roundcube/apache.conf**<br>
 Selanjutnya, masuk ke directory website apache dan tambahkan file baru untuk mail server.<br>
-**cd /etc/apache2/sites-available**
-**touch mail.conf**
-**vi mail.conf**
-**<VirtualHost *:80>**
-**ServerName mail.kampus-02.takehome.com**
-**DocumentRoot /usr/share/roundcube**
-</VirtualHost>
+**cd /etc/apache2/sites-available**<br>
+**touch mail.conf**<br>
+**vi mail.conf**<br>
+**<VirtualHost *:80>**<br>
+**ServerName mail.kampus-07.takehome.com**<br>
+**DocumentRoot /usr/share/roundcube**<br>
+</VirtualHost><br>
 
-Disable apache default config dan enable kan mail config.
-**a2dissite 000-default.conf**
+Disable apache default config dan enable kan mail config.<br>
+**a2dissite 000-default.conf**<br>
 **a2ensite mail.conf**<br>
 
 Restart apache service.<br>
-**sudo systemctl restart apache2**
+**sudo systemctl restart apache2**<br>
 
-## Testing
-1. Buat user untuk mail terlebih dahulu
-**adduser satu**
-**adduser dua**
+## Testing<br>
+1. Buat user untuk mail terlebih dahulu<br>
+**adduser satu**<br>
+**adduser dua**<br>
 
 jangan lupa restart postfix dan dovecot<br>
-**systemctl restart postfix dovecot**
+**systemctl restart postfix dovecot**<br>
 
-2. Testing dengan telnet
-**apt install telnet**
+2. Testing dengan telnet<br>
+**apt install telnet**<br>
 
 Test kirim file menggunakan perintah telnet dengan menggunakan port 25 (SMTP). Masukkan nama alamat pengirim menggunakan mail from:. Masukkan nama alamat penerima menggunakan rcpt to:. Ketikkan data lalu enter. Isikan subject dengan megetikkan Subject: . Lalu isikan pesan yang akan dikirim kemudian isikan titik (.) untuk mengakhiri pesan.<br>
 **telnet mail.kampus-02.takehome.com 25**<br>
