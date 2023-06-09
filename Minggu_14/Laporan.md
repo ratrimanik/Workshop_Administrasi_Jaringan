@@ -33,8 +33,10 @@ TAHUN 2023
 ## Konfigurasi Postfix dan Dovecot
 Sebelum memulai install mail server, ada baiknya siapkan domain khusus yang akan digunakan untuk konfigurasi mail server. Dalam contoh konfigurasi kali ini akan menggunakan nama domain mail.kampus-07.takehome.com yang dibuat menggunakan bind9 secara lokal.<br>
 1. Update repository dan install package postfix, dengan menggunakan perintah<br>
-**apt update**<br>
-**apt install postfix dovecot-imapd dovecot-pop3d**<br>
+``` bash
+apt update
+apt install postfix dovecot-imapd dovecot-pop3d
+```
 
 2. Konfigurasi Postfix<br>
 Setelah installasi selesai akan muncul message box, kemudian pilih internet site agar komunikasi email menggunakan protokol SMTP secara langsung.<br>
