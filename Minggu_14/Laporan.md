@@ -46,17 +46,25 @@ Selanjutnya masukkan nama domain yang ingin digunakan<br>
 ![](ss/1.png)<br><br>
 
 Setelah itu, postfix akan menyelesaikan installasinya. Setelah Installasi selesai, edit file di /etc/postfix/main.cf dan tambahkan home_mailbox = Maildir/ pada baris paling bawah.<br>
-**sudo nano /etc/postfix/main.cf**<br>
+``` bash
+sudo nano /etc/postfix/main.cf
+```
 
-**inet_interfaces = all**<br>
-**inet_protocols = all**<br>
+``` bash
+inet_interfaces = all
+inet_protocols = all
+```
 #tambahkan baris berikut pada baris paling bawah home_mailbox = Maildir/<br>
 
 buat mail directory di directory /etc/skel<br>
-**maildirmake.dovecot /etc/skel/Maildir**<br>
+``` bash
+maildirmake.dovecot /etc/skel/Maildir
+```
 
 Setelah itu masukkan perintah berikut<br>
-**dpkg-reconfigure postfix**<br>
+``` bash
+dpkg-reconfigure postfix
+```
 Pilih beberapa pilihan dan isikan beberapa input yang akan muncul, sesuaikan dengan topology/konfigurasi sistem dan kebutuhan.<br>
 ![](ss/1a.png)<br><br>
 ![](ss/1.png)<br><br>
@@ -69,45 +77,65 @@ Pilih beberapa pilihan dan isikan beberapa input yang akan muncul, sesuaikan den
 ![](ss/5a.png)<br><br>
 
 Restart postfix service, dengan menggunakan perintah<br>
-**systemctl restart postfix**<br>
+``` bash
+systemctl restart postfix
+```
 
 3. Konfigurasi Dovecot<br>
 Edit file konfigurasi /etc/dovecot/dovecot.conf.<br>
-**sudo nano /etc/dovecot/dovecot.conf**<br>
+``` bash
+sudo nano /etc/dovecot/dovecot.conf
+```
 
 Uncomment dan edit baris berikut.<br>
 
-**# If you want to specify non-default ports or anything more complex,**<br>
-**# edit conf.d/master.conf.**<br>
-**listen = ***<br>
+``` bash
+# If you want to specify non-default ports or anything more complex,
+# edit conf.d/master.conf.
+listen = *
+```
 ![](ss/9.png)<br><br>
 
 Edit file konfigurasi /etc/dovecot/conf.d/10-auth.conf.<br>
-**sudo nano /etc/dovecot/conf.d/10-auth.conf**<br>
+``` bash
+sudo nano /etc/dovecot/conf.d/10-auth.conf
+```
 
 Uncomment dan ganti dari yes ke no.<br>
-**# connection is considered secure and plaintext authentication is allowed.**<br>
-**# See also ssl=required setting.**<br>
-**disable_plaintext_auth = no**<br>
+``` bash
+# connection is considered secure and plaintext authentication is allowed.
+# See also ssl=required setting.
+disable_plaintext_auth = no
+```
 ![](ss/10.png)<br><br>
 
 Edit file konfigurasi /etc/dovecot/conf.d/10-mail.conf.<br>
-**sudo nano /etc/dovecot/conf.d/10-mail.conf**<br>
+``` bash
+sudo nano /etc/dovecot/conf.d/10-mail.conf
+```
 
 Uncomment pada baris berikut.<br>
-**mail_location = maildir:~/Maildir**<br>
+``` bash
+mail_location = maildir:~/Maildir
+```
 ![](ss/11.png)<br><br>
 
 Beri comment pada baris berikut.<br>
-**# mail_location = mbox:~/mail:INBOX=/var/mail/%u**<br>
+``` bash
+# mail_location = mbox:~/mail:INBOX=/var/mail/%u
+```
 
 Restart dovesot service, dengan menggunakan perintah<br>
-**systemctl restart dovecot**<br>
+``` bash
+systemctl restart dovecot
+```
 
 ## Konfigurasi RoundCube
 1. Install Mariadb dan Roundcube<br>
 Install roundcube sebagai webmail yang akan digunakan oleh client, dan package mariadb yang nantinya akan digunakan sebagai database dari roundcube.<br>
-**apt install mariadb-server roundcube**<br
+``` bash
+apt install mariadb-server roundcube
+```
 Pilih yes untuk membuat database secara otomatis oleh roundcube.<br>
 ![](ss/14.png)<br><br>
 
@@ -116,30 +144,44 @@ Masukkan password database roundcube.<br>
 ![](ss/16.png)<br><br>
 
 Edit file /etc/roundcube/config.inc.php.<br>
-**sudo nano /etc/roundcube/config.inc.php**<br>
+``` bash
+sudo nano /etc/roundcube/config.inc.php
+```
 
 Isikan default host dengan nama domain mail server.<br>
-**// For example %n = mail.domain.tld, %t = domain.tld**<br>
-**$config['default_host'] = 'mail.kampus-02.takehome.com';**<br>
+``` bash 
+// For example %n = mail.domain.tld, %t = domain.tld
+$config['default_host'] = 'mail.kampus-07.takehome.com';
+```
 
 Ganti smtp server dengan nama domain mail server.<br>
-**// For example %n = mail.domain.tld, %t = domain.tld**<br>
-**$config['smtp_server'] = 'mail.kampus-02.takehome.com';**<br>
+``` bash
+// For example %n = mail.domain.tld, %t = domain.tld
+$config['smtp_server'] = 'mail.kampus-07.takehome.com';
+```
 
 Ganti smtp port dari 587 ke 25.<br>
-**// SMTP port. Use 25 for cleartext, 465 for Implicit TLS, or 587 for STARTTLS (default)**<br>
-**$config['smtp_port'] = 25;**<br>
+``` bash
+// SMTP port. Use 25 for cleartext, 465 for Implicit TLS, or 587 for STARTTLS (default)
+$config['smtp_port'] = 25;
+```
 
 Kosongkan value dari smtp user.<br>
-**// will use the current username for login**<br>
-**$config['smtp_user'] = '';**<br>
+``` bash 
+// will use the current username for login
+$config['smtp_user'] = '';
+```
 
 Kosongkan value dari smtp password<br>
-**// will use the current user's password for login**<br>
-**$config['smtp_pass'] = '';**<br>
+``` bash
+// will use the current user's password for login
+$config['smtp_pass'] = '';
+```
 
 Configure ulang roundcube (langkah ini bisa dilewati).<br>
-**dpkg-reconfigure roundcube-core**<br>
+``` bash
+dpkg-reconfigure roundcube-core
+```
 
 Kosongkan karena kita tidak menggunakan tls.<br>
 ![](ss/17.png)<br><br>
@@ -159,42 +201,67 @@ Keep local version jika tidak ingin merubah versi roundcube ke yang lebih terbar
 ![](ss/21.png)<br><br>
 
 Edit apache config untuk memasukkan konfigurasi tambahan dari roundcube ke apache config.<br>
-**sudo nano /etc/apache2/apache2.conf**<br>
+``` bash
+sudo nano /etc/apache2/apache2.conf
+```
+
 Tambahkan pada baris paling bawah.<br>
-**Include /etc/roundcube/apache.conf**<br>
+``` bash
+Include /etc/roundcube/apache.conf
+```
+
 Selanjutnya, masuk ke directory website apache dan tambahkan file baru untuk mail server.<br>
-**cd /etc/apache2/sites-available**<br>
-**touch mail.conf**<br>
-**vi mail.conf**<br>
-**<VirtualHost *:80>**<br>
-**ServerName mail.kampus-07.takehome.com**<br>
-**DocumentRoot /usr/share/roundcube**<br>
-</VirtualHost><br>
+``` bash
+cd /etc/apache2/sites-available
+touch mail.conf
+vi mail.conf
+```
+
+``` bash
+<VirtualHost *:80>
+ServerName mail.kampus-07.takehome.com
+DocumentRoot /usr/share/roundcube
+</VirtualHost>
+```
 
 Disable apache default config dan enable kan mail config.<br>
-**a2dissite 000-default.conf**<br>
-**a2ensite mail.conf**<br>
+``` bash
+a2dissite 000-default.conf
+a2ensite mail.conf
+```
 
 Restart apache service.<br>
-**sudo systemctl restart apache2**<br>
+``` bash
+sudo systemctl restart apache2
+```
 
 ## Testing<br>
 1. Buat user untuk mail terlebih dahulu<br>
-**adduser satu**<br>
-**adduser dua**<br>
+``` bash
+adduser satu
+adduser dua
+```
 
 jangan lupa restart postfix dan dovecot<br>
-**systemctl restart postfix dovecot**<br>
+``` bash
+systemctl restart postfix dovecot
+```
 
 2. Testing dengan telnet<br>
-**apt install telnet**<br>
+``` bash
+apt install telnet
+```
 
 Test kirim file menggunakan perintah telnet dengan menggunakan port 25 (SMTP). Masukkan nama alamat pengirim menggunakan mail from:. Masukkan nama alamat penerima menggunakan rcpt to:. Ketikkan data lalu enter. Isikan subject dengan megetikkan Subject: . Lalu isikan pesan yang akan dikirim kemudian isikan titik (.) untuk mengakhiri pesan.<br>
-**telnet mail.kampus-02.takehome.com 25**<br>
+``` bash
+telnet mail.kampus-07.takehome.com 25
+```
 
 Melihat pesan menggunakan perintah telnet . Login user menggunakan user . Dan masukkan password menggunakan pass . Untuk melihat list pesan yang diterima menggunakan perintah list. Dan untuk membuka pesan yang diterima menggunakan perintah retr .
 Perintah quit untuk keluar dari telnet.<br>
-**telnet mail.kampus-02.takehome.com 110**
+``` bash
+telnet mail.kampus-07.takehome.com 110
+```
 
 3. Selanjutnya buka web browser pada sisi client dan masukkan domain dari mail server (mail.kampus-02.takehome.com), maka akan muncul interface dari roundcube. Lalu login menggunakan salah satu user yang telah dibuat.<br>
 
